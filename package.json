@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "zip": "git archive --format=zip -o ../snapshot.zip HEAD ."
+  }
+}
