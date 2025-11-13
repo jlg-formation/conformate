@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil</title>
+    <title>Connexion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: sans-serif; }
@@ -34,37 +34,26 @@
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold mb-4">Plateforme d’évaluation automatique de documents</h1>
-            <p class="text-xl text-gray-700 mb-6">Évaluez la conformité de vos documents selon une checklist personnalisée. Gain de temps et objectivité garantie.</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="06-connexion.html" class="inline-block px-6 py-3 border border-gray-400 rounded bg-gray-100 hover:bg-gray-200 text-lg">Se connecter</a>
-                <a href="05-inscription.html" class="inline-block px-6 py-3 border border-gray-400 rounded bg-gray-100 hover:bg-gray-200 text-lg">S’inscrire</a>
-            </div>
-        </div>
-        <div class="grid md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-gray-50 border border-gray-300 rounded p-6">
-                <h2 class="text-xl font-semibold mb-2">Gain de temps</h2>
-                <p class="text-gray-700">Automatisez l'évaluation de vos documents en quelques clics.</p>
-            </div>
-            <div class="bg-gray-50 border border-gray-300 rounded p-6">
-                <h2 class="text-xl font-semibold mb-2">Objectivité</h2>
-                <p class="text-gray-700">Scores basés sur des critères précis et reproductibles.</p>
-            </div>
-            <div class="bg-gray-50 border border-gray-300 rounded p-6">
-                <h2 class="text-xl font-semibold mb-2">Conformité</h2>
-                <p class="text-gray-700">Adaptez les checklists à vos besoins (CEE, Qualiopi, etc.).</p>
-            </div>
-        </div>
+    <main class="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="bg-gray-50 border border-gray-300 rounded p-6">
-            <h2 class="text-xl font-semibold mb-4">Cas d'usage</h2>
-            <ul class="list-disc list-inside text-gray-700 space-y-2">
-                <li>Contrôle qualité de dossiers pédagogiques Qualiopi</li>
-                <li>Vérification de devis de rénovation énergétique CEE</li>
-                <li>Évaluation de conformité RGPD</li>
-                <li>Audit de dossiers administratifs</li>
-            </ul>
+            <h1 class="text-2xl font-bold mb-6 text-center">Se connecter</h1>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-1">Email</label>
+                    <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:border-gray-500" placeholder="votre@email.com">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-1">Mot de passe</label>
+                    <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:border-gray-500" placeholder="Mot de passe">
+                </div>
+                <a href="07-tableau-de-bord.html" class="inline-block w-full text-center px-4 py-2 border border-gray-400 rounded bg-gray-100 hover:bg-gray-200">Se connecter</a>
+            </form>
+            <p class="text-center mt-4 text-gray-700">
+                <a href="#" class="underline">Mot de passe oublié</a>
+            </p>
+            <p class="text-center mt-2 text-gray-700">
+                Pas de compte ? <a href="05-inscription.html" class="text-gray-900 hover:text-gray-700 underline">S’inscrire</a>
+            </p>
         </div>
     </main>
 
@@ -84,4 +73,4 @@
     </footer>
 </body>
 </html></content>
-<parameter name="filePath">d:\___GIACV1\controldoc\ecrans\wireframe\04-accueil.html
+<parameter name="filePath">d:\___GIACV1\controldoc\ecrans\wireframe\06-connexion.html

@@ -1,14 +1,15 @@
-# 🧠 Prompt UX/UI – Génération d’écrans à partir des spécifications fonctionnelles (v8)
+# 🧠 Prompt UX/UI – Génération d’écrans à partir des spécifications fonctionnelles (v11)
 
 ## 🎯 Objectif
 
 Tu es un **expert UX/UI designer**.  
 À partir des spécifications fonctionnelles du projet, tu dois produire des **wireframes HTML + Tailwind** (en noir et blanc uniquement, sans logique applicative), **en mode responsive et cliquable**.  
-Le processus comprend deux phases :
+Le processus comprend trois phases :  
 1️⃣ création du **sitemap**,  
-2️⃣ génération des **écrans** par lots.
+2️⃣ génération des **écrans** par lots,  
+3️⃣ **contrôle automatique et progressif des liens inter-écrans**.
 
-Tous les écrans doivent **strictement respecter la structure et les composants des layouts** définis dans `/ecrans/layout/`, et être **interconnectés** par des liens HTML permettant une **navigation fluide** entre les pages.
+Tous les écrans doivent **strictement respecter la structure et les composants des layouts** définis dans `/ecrans/layout/`, et être **interconnectés** par des liens HTML permettant une **navigation fluide et cohérente** entre les pages.
 
 ---
 
@@ -17,8 +18,8 @@ Tous les écrans doivent **strictement respecter la structure et les composants 
 | Paramètre | Type | Défaut | Description |
 |---|---|---|---|
 | `specs` | string | `"specs/"` | Chemin du répertoire contenant les spécifications fonctionnelles. |
-| `action` | string | `"sitemap"` | `"sitemap"` pour créer ou mettre à jour le plan, `"generate_batch"` pour produire un lot d’écrans. |
-| `batch_size` | number | `5` | Nombre d’écrans à produire par lot. |
+| `action` | string | `"sitemap"` | `"sitemap"` pour créer ou mettre à jour le plan, `"generate_batch"` pour produire un lot d’écrans, `"control_link"` pour vérifier et corriger les liens. |
+| `batch_size` | number | `5` | Nombre d’écrans à produire ou à vérifier par lot (utilisé pour `generate_batch` et `control_link`). |
 
 > Tous les écrans sont générés **exclusivement en wireframe responsive HTML + Tailwind**.  
 > Aucun paramètre `device`, `type` ou `resume_from` n’est utilisé.
@@ -40,23 +41,55 @@ Tous les écrans doivent **strictement respecter la structure et les composants 
 - Ajouter **en tête** deux lignes pour les **layouts** (non connecté / connecté) si absentes.  
 - Le sitemap reste la **source de vérité unique** : il peut être édité manuellement par l’utilisateur.
 
-### 4) Génération par lots
-- Lors de `action="generate_batch"` :
-  1. Si les deux layouts sont absents ou `TODO`, **les générer d’abord** (hors `batch_size`).  
-  2. Générer ensuite `batch_size` écrans supplémentaires listés comme `TODO`.  
-  3. Mettre à jour les statuts correspondants dans le sitemap.  
-  4. Chaque écran doit **intégrer des liens HTML fonctionnels** pointant vers les fichiers `.html` des autres écrans du projet, selon les interactions prévues dans les specs.  
-  5. Tous les écrans doivent être **strictement monochromes** (noir, blanc, gris).
+### 4) Génération par lots (`action="generate_batch"`)
+- Si les deux layouts sont absents ou `TODO`, **les générer d’abord** (hors `batch_size`).  
+- Générer ensuite `batch_size` écrans supplémentaires listés comme `TODO`.  
+- Mettre à jour les statuts correspondants dans le sitemap.  
+- Chaque écran doit **intégrer des liens HTML fonctionnels** pointant vers les fichiers `.html` des autres écrans du projet, selon les interactions prévues dans les specs.  
+- Les écrans non encore existants utilisent un lien temporaire :  
+  ```html
+  <a href="#">[à venir]</a>
+  ```  
+- Tous les écrans doivent être **strictement monochromes** (noir, blanc, gris).
+
+---
+
+### 5) Contrôle et correction progressive des liens (`action="control_link"`)
+Cette étape permet de **remplacer les liens temporaires `[à venir]`** par les bons liens HTML réels, au fur et à mesure que les écrans sont disponibles.
+
+#### 🔄 Processus par lots
+- Lire la liste des fichiers `ecrans/wireframe/*.html`.  
+- Traiter **jusqu’à `batch_size` fichiers** à chaque exécution, afin de limiter les modifications simultanées.  
+- Pour chaque fichier du lot :
+  - Identifier les liens `<a href="#">` ou contenant `[à venir]`.  
+  - Croiser avec la liste d’écrans existants issue du `sitemap`.  
+  - Si une correspondance est trouvée, **remplacer le lien temporaire** par le bon `href` relatif, par exemple :  
+    ```html
+    <a href="../wireframe/12-profil.html">Profil</a>
+    ```
+  - Conserver le lien `[à venir]` uniquement si l’écran cible n’existe toujours pas.  
+- En fin de lot :
+  - Mettre à jour le sitemap si des corrections ont été faites.  
+  - Générer ou mettre à jour le rapport `ecrans/99-report-control-link.md` listant :
+    - les fichiers corrigés,  
+    - les liens modifiés,  
+    - les écrans encore manquants.  
+
+#### 🧮 Exécution itérative
+- Le traitement doit pouvoir être relancé plusieurs fois jusqu’à ce que **tous les liens `[à venir]` soient remplacés**.  
+- Lorsqu’aucun lien temporaire ne subsiste, afficher le message :  
+  > ✅ Tous les liens sont désormais valides et cohérents.
 
 ---
 
 ## 📁 Dossiers & fichiers de sortie
 
 Tous les fichiers sont placés dans **`ecrans/`** :
-- `ecrans/01-sitemap.md` — source de vérité
-- `ecrans/layout/02-layout-non-connecte.html`
-- `ecrans/layout/03-layout-connecte.html`
-- `ecrans/wireframe/NN-<slug-ecran>.html` — écrans interconnectés et navigables
+- `ecrans/01-sitemap.md` — source de vérité  
+- `ecrans/layout/02-layout-non-connecte.html`  
+- `ecrans/layout/03-layout-connecte.html`  
+- `ecrans/wireframe/NN-<slug-ecran>.html` — écrans interconnectés et navigables  
+- `ecrans/99-report-control-link.md` — rapport de correction des liens `[à venir]`
 
 ---
 
@@ -67,8 +100,26 @@ Tous les fichiers sont placés dans **`ecrans/`** :
 - Les liens doivent être **visuellement reconnaissables**, par exemple via un soulignement, un contour ou un changement de niveau de gris — **jamais par une couleur**.  
 - Lorsqu’un lien cible un écran non encore généré, insérer un lien `<a href="#">[à venir]</a>` pour maintenir la cohérence de navigation.  
 - **Le nom du site (ou logo) dans le header doit toujours être un lien cliquable :**
-  - Dans le layout non connecté → `href="../wireframe/04-accueil.html"`.
-  - Dans le layout connecté → `href="../wireframe/XX-tableau-de-bord.html"`.
+  - Dans le layout non connecté → `href="../wireframe/04-accueil.html"`.  
+  - Dans le layout connecté → `href="../wireframe/XX-tableau-de-bord.html"`.  
+- **Tous les boutons d’action doivent se comporter comme des liens HTML** et utiliser exclusivement la balise `<a>` avec un `href` valide.
+
+---
+
+## 🧭 Règles spécifiques pour les boutons d’action
+
+- **Tous les boutons ou CTA (“Suivant”, “Se connecter”, “S’inscrire”, “Valider”, etc.) doivent être des liens HTML (`<a>`)**, jamais des `<button>` ou `<input>`.  
+- Chaque bouton doit posséder un `href` réel pointant vers un écran existant du répertoire `ecrans/wireframe/`.  
+  - Exemple :  
+    ```html
+    <a href="../wireframe/06-connexion.html" class="inline-block px-4 py-2 border border-gray-400 rounded bg-gray-100 hover:bg-gray-200">Se connecter</a>
+    ```
+- Si l’écran cible n’existe pas encore, utiliser `href="#"` et afficher `[à venir]` comme texte.  
+- Les liens doivent **ressembler visuellement à des boutons**, mais conserver leur **comportement de lien**.  
+- Classes Tailwind recommandées :
+  - `inline-block`, `rounded`, `border`, `border-gray-400`, `px-4`, `py-2`, `bg-gray-100`, `hover:bg-gray-200`
+- **Aucun élément `<button>` ni `<input type="submit">` n’est autorisé.**
+- Cette règle s’applique à **tous les écrans générés**, y compris les layouts.
 
 ---
 
@@ -81,7 +132,7 @@ Tous les fichiers sont placés dans **`ecrans/`** :
 - Aucun élément ne doit contenir de couleur (pas de bleu, vert, rouge, etc.).
 - Les composants Tailwind doivent utiliser uniquement des classes neutres :
   - `bg-white`, `bg-gray-*`, `text-black`, `text-gray-*`, `border-gray-*`, etc.
-- Aucun dégradé, ombre colorée, ou teinte accentuée.
+- Aucun dégradé, ombre colorée ou teinte accentuée.
 - Le wireframe doit rester **entièrement noir et blanc**, adapté à l’impression.
 
 ---
@@ -112,10 +163,9 @@ Tous les fichiers sont placés dans **`ecrans/`** :
 ## ⚠️ Règles & garde-fous
 
 - **Interdiction absolue** de redéfinir un header, footer ou menu latéral.  
-  Ces éléments doivent être **strictement identiques** à ceux des layouts.  
-- **Le logo ou nom du site doit toujours être un lien cliquable vers la page principale.**  
 - **Tous les liens doivent être cliquables et naviguer vers les fichiers cibles.**  
-- **Aucune couleur n’est autorisée.**  
-- Aucun JavaScript ni routing : uniquement du **HTML statique interconnecté**.  
+- **Aucun `<button>` ni JavaScript** ne sont autorisés.  
+- **Les actions `generate_batch` et `control_link` doivent toujours respecter `batch_size`** pour éviter les réécritures massives.  
+- **`control_link` doit être rejouable** à volonté jusqu’à correction complète.  
 - Respect complet du responsive design et de l’accessibilité.  
 - Toute ambiguïté doit être documentée dans la section **Notes** du sitemap.

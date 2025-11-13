@@ -1,64 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Layout Non Connecté - Conformate</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout – Non Connecté</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-white text-black min-h-screen flex flex-col">
-    <header class="border-b border-gray-300">
-      <div
-        class="container mx-auto px-4 py-4 flex justify-between items-center"
-      >
-        <a
-          href="../wireframe/04-accueil.html"
-          class="text-xl font-bold underline hover:bg-gray-100 px-2 py-1 rounded"
-          >Conformate</a
-        >
-        <nav class="flex space-x-4">
-          <a
-            href="../wireframe/05-connexion.html"
-            class="underline hover:bg-gray-100 px-2 py-1 rounded"
-            >Se connecter</a
-          >
-          <a
-            href="../wireframe/06-inscription.html"
-            class="underline hover:bg-gray-100 px-2 py-1 rounded"
-            >S’inscrire</a
-          >
-        </nav>
-      </div>
-    </header>
-    <main class="flex-grow container mx-auto px-4 py-8">
-      <!-- Contenu de la page ici -->
-      <p class="text-gray-600">Contenu principal de la page.</p>
-    </main>
-    <footer class="border-t border-gray-300">
-      <div class="container mx-auto px-4 py-4 text-center">
-        <div class="flex justify-center space-x-4 flex-wrap">
-          <a
-            href="../wireframe/07-a-propos.html"
-            class="underline hover:bg-gray-100 px-2 py-1 rounded"
-            >À propos</a
-          >
-          <a
-            href="../wireframe/08-aide.html"
-            class="underline hover:bg-gray-100 px-2 py-1 rounded"
-            >Aide</a
-          >
-          <a
-            href="../wireframe/09-confidentialite.html"
-            class="underline hover:bg-gray-100 px-2 py-1 rounded"
-            >Confidentialité</a
-          >
-          <a
-            href="../wireframe/10-conditions.html"
-            class="underline hover:bg-gray-100 px-2 py-1 rounded"
-            >Conditions</a
-          >
+    <style>
+        body { font-family: sans-serif; }
+    </style>
+</head>
+<body class="bg-white text-black">
+    <!-- Header -->
+    <header class="bg-gray-100 border-b border-gray-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="../wireframe/04-accueil.html" class="text-xl font-bold text-black hover:text-gray-700">Conformate</a>
+                </div>
+                <nav class="hidden md:flex space-x-4">
+                    <a href="../wireframe/06-connexion.html" class="text-gray-700 hover:text-black">Se connecter</a>
+                    <a href="../wireframe/05-inscription.html" class="text-gray-700 hover:text-black">S’inscrire</a>
+                </nav>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button class="text-gray-700 hover:text-black focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
+    </header>
+
+    <!-- Main Content Placeholder -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="bg-gray-50 border border-gray-300 rounded p-6">
+            <h1 class="text-2xl font-bold mb-4">Contenu de la page</h1>
+            <p class="text-gray-700">Cette section représente le contenu principal de la page. Dans les écrans réels, ce contenu sera remplacé par le contenu spécifique de chaque page.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 border-t border-gray-300 mt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex space-x-4 mb-4 md:mb-0">
+                    <a href="../wireframe/18-a-propos.html" class="text-gray-700 hover:text-black">À propos</a>
+                    <a href="../wireframe/17-aide.html" class="text-gray-700 hover:text-black">Aide</a>
+                    <a href="../wireframe/19-confidentialite.html" class="text-gray-700 hover:text-black">Confidentialité</a>
+                    <a href="../wireframe/20-conditions.html" class="text-gray-700 hover:text-black">Conditions</a>
+                </div>
+                <p class="text-gray-600 text-sm">&copy; 2025 Conformate. Tous droits réservés.</p>
+            </div>
+        </div>
     </footer>
-  </body>
-</html>
+</body>
+</html></content>
+<parameter name="filePath">d:\___GIACV1\controldoc\ecrans\layout\02-layout-non-connecte.html

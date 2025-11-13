@@ -1,176 +1,134 @@
-# Sitemap - Plateforme d'évaluation automatique de documents
+# Sitemap du projet : Plateforme d’évaluation automatique de documents selon une checklist de conformité
 
 ## Layouts
 
-- 02-layout-non-connecte.html: DONE
-- 03-layout-connecte.html: DONE
+- Layout – non connecté : DONE
+- Layout – connecté : DONE
 
 ## Écrans
 
-### 04-accueil
+- Accueil : DONE
 
-**Nom :** Accueil  
-**Objectif utilisateur :** Découvrir la plateforme de conformité documentaire et accéder aux fonctionnalités de connexion ou inscription.  
-**Contenus clés :** Titre principal, description de la plateforme, avantages clés (gain de temps, objectivité, traçabilité), témoignages ou cas d'usage, appels à l'action (Se connecter, S'inscrire).  
-**Interactions principales :** Cliquer sur "Se connecter" (vers connexion), "S'inscrire" (vers inscription), liens footer (À propos, Aide, etc.).  
-**Prérequis :** Aucun (accès public).  
-**Statut :** DONE
+  - **Objectif utilisateur** : Présenter la plateforme et ses avantages aux visiteurs non connectés.
+  - **Contenus clés** : Titre, description du service, avantages (gain de temps, objectivité), témoignages ou cas d'usage, appels à l'action (Se connecter, S’inscrire).
+  - **Interactions principales** : Cliquer sur "Se connecter" ou "S’inscrire" pour accéder aux formulaires correspondants.
+  - **Pré-requis** : Aucun (page publique).
 
-### 05-connexion
+- Inscription : DONE
 
-**Nom :** Connexion  
-**Objectif utilisateur :** Se connecter à son compte pour accéder au tableau de bord.  
-**Contenus clés :** Formulaire avec champs email/mot de passe, lien "Mot de passe oublié", lien vers inscription.  
-**Interactions principales :** Saisir credentials, valider connexion (vers tableau de bord), créer compte.  
-**Prérequis :** Avoir un compte utilisateur.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Permettre aux nouveaux utilisateurs de créer un compte.
+  - **Contenus clés** : Formulaire d'inscription (nom, email, mot de passe, confirmation), liens vers connexion et conditions.
+  - **Interactions principales** : Soumettre le formulaire pour créer le compte, navigation vers connexion.
+  - **Pré-requis** : Aucun.
 
-### 06-inscription
+- Connexion : DONE
 
-**Nom :** Inscription  
-**Objectif utilisateur :** Créer un compte pour utiliser la plateforme.  
-**Contenus clés :** Formulaire avec nom, email, mot de passe, confirmation, conditions d'utilisation.  
-**Interactions principales :** Remplir formulaire, valider inscription (vers connexion ou tableau de bord), lien vers connexion.  
-**Prérequis :** Aucun.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Authentifier les utilisateurs existants.
+  - **Contenus clés** : Formulaire de connexion (email, mot de passe), lien "Mot de passe oublié", lien vers inscription.
+  - **Interactions principales** : Soumettre le formulaire pour se connecter, redirection vers tableau de bord.
+  - **Pré-requis** : Compte utilisateur existant.
 
-### 07-a-propos
+- Tableau de bord : DONE
 
-**Nom :** À propos  
-**Objectif utilisateur :** En savoir plus sur la plateforme et ses objectifs.  
-**Contenus clés :** Présentation de la plateforme, équipe, mission, cas d'usage.  
-**Interactions principales :** Navigation vers autres pages.  
-**Prérequis :** Aucun.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Fournir un aperçu global des projets, scores et analyses récentes.
+  - **Contenus clés** : Liste des projets récents, statistiques (moyenne scores, nombre de conformes), graphiques de synthèse, accès rapide à créer projet.
+  - **Interactions principales** : Cliquer sur un projet pour voir le détail, créer nouveau projet, accéder aux paramètres.
+  - **Pré-requis** : Utilisateur connecté.
 
-### 08-aide
+- Projets : DONE
 
-**Nom :** Centre d'aide  
-**Objectif utilisateur :** Trouver des réponses aux questions fréquentes et guides d'utilisation.  
-**Contenus clés :** FAQ, guides pas à pas, contact support.  
-**Interactions principales :** Rechercher, naviguer dans les sections.  
-**Prérequis :** Aucun.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Lister et gérer tous les projets de l'utilisateur.
+  - **Contenus clés** : Liste des projets avec statut, score, date, filtres par score ou date.
+  - **Interactions principales** : Ouvrir un projet, créer nouveau, supprimer/archiver.
+  - **Pré-requis** : Utilisateur connecté.
 
-### 09-confidentialite
+- Créer projet : DONE
 
-**Nom :** Politique de confidentialité  
-**Objectif utilisateur :** Comprendre comment les données sont gérées.  
-**Contenus clés :** Description des données collectées, utilisation, droits utilisateur.  
-**Interactions principales :** Lecture du texte.  
-**Prérequis :** Aucun.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Initialiser un nouveau projet d'évaluation.
+  - **Contenus clés** : Formulaire pour nommer le projet, sélectionner type (CEE, Qualiopi, etc.), description.
+  - **Interactions principales** : Soumettre pour créer, annuler pour revenir à la liste.
+  - **Pré-requis** : Utilisateur connecté.
 
-### 10-conditions
+- Détail projet : DONE
 
-**Nom :** Conditions d'utilisation  
-**Objectif utilisateur :** Accepter les termes d'utilisation de la plateforme.  
-**Contenus clés :** Texte des conditions, acceptation.  
-**Interactions principales :** Lecture et acceptation.  
-**Prérequis :** Aucun.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Gérer les fichiers, checklist et analyses d'un projet spécifique.
+  - **Contenus clés** : Liste des fichiers téléversés, checklist associée, bouton lancer analyse, résultats si disponibles.
+  - **Interactions principales** : Téléverser fichiers, sélectionner checklist, lancer analyse, voir résultats.
+  - **Pré-requis** : Projet existant, utilisateur connecté.
 
-### 11-tableau-de-bord
+- Résultats analyse : DONE
 
-**Nom :** Tableau de bord  
-**Objectif utilisateur :** Avoir une vue d'ensemble de ses projets et analyses récentes.  
-**Contenus clés :** Statistiques (nombre de projets, scores moyens), liste des projets récents, accès rapide à créer projet.  
-**Interactions principales :** Cliquer sur un projet (vers détails), créer nouveau projet, accéder à historique.  
-**Prérequis :** Être connecté.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Consulter le score et les détails de conformité d'une analyse.
+  - **Contenus clés** : Score global, graphique (jauge), liste des critères validés/non conformes, commentaires.
+  - **Interactions principales** : Télécharger rapport, relancer analyse, annoter résultats.
+  - **Pré-requis** : Analyse effectuée sur un projet.
 
-### 12-creer-projet
+- Rapport : DONE
 
-**Nom :** Créer un projet  
-**Objectif utilisateur :** Initialiser un nouveau projet d'évaluation.  
-**Contenus clés :** Formulaire nom du projet, description, type de checklist.  
-**Interactions principales :** Remplir formulaire, valider (vers téléversement).  
-**Prérequis :** Être connecté.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Générer et télécharger un rapport détaillé de conformité.
+  - **Contenus clés** : Résumé du score, détails critère par critère, synthèse (conforme/partiel/non conforme).
+  - **Interactions principales** : Télécharger PDF, partager, exporter CSV.
+  - **Pré-requis** : Analyse terminée.
 
-### 13-mes-elements
+- Historique : DONE
 
-**Nom :** Mes éléments  
-**Objectif utilisateur :** Gérer et consulter la liste de ses projets.  
-**Contenus clés :** Liste des projets avec statut, score, date, filtres.  
-**Interactions principales :** Filtrer, trier, ouvrir un projet, supprimer.  
-**Prérequis :** Être connecté, avoir des projets.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Consulter l'historique des analyses et évolutions des scores.
+  - **Contenus clés** : Chronologie des analyses, évolution des scores, comparaisons.
+  - **Interactions principales** : Filtrer par période, exporter données.
+  - **Pré-requis** : Analyses précédentes.
 
-### 14-favoris
+- Gestion checklists : DONE
 
-**Nom :** Favoris  
-**Objectif utilisateur :** Accéder rapidement aux checklists favorites.  
-**Contenus clés :** Liste des checklists marquées comme favorites.  
-**Interactions principales :** Sélectionner une checklist, gérer favoris.  
-**Prérequis :** Être connecté.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Créer, modifier ou supprimer des checklists de conformité (rôle admin).
+  - **Contenus clés** : Liste des checklists, éditeur de critères (nom, poids, règles).
+  - **Interactions principales** : Ajouter/modifier/supprimer critères, importer checklist.
+  - **Pré-requis** : Rôle administrateur.
 
-### 15-parametres
+- Paramètres : DONE
 
-**Nom :** Paramètres  
-**Objectif utilisateur :** Configurer les préférences utilisateur.  
-**Contenus clés :** Options de notification, seuils de score, clé API OpenAI.  
-**Interactions principales :** Modifier paramètres, sauvegarder.  
-**Prérequis :** Être connecté.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Configurer les préférences utilisateur (seuils, notifications, clé API).
+  - **Contenus clés** : Formulaires pour seuils d'alerte, intégration LLM, thème.
+  - **Interactions principales** : Sauvegarder changements.
+  - **Pré-requis** : Utilisateur connecté.
 
-### 16-profil
+- Profil : DONE
 
-**Nom :** Profil  
-**Objectif utilisateur :** Gérer les informations personnelles.  
-**Contenus clés :** Champs nom, email, photo, changer mot de passe.  
-**Interactions principales :** Éditer, sauvegarder, déconnexion.  
-**Prérequis :** Être connecté.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Gérer les informations personnelles.
+  - **Contenus clés** : Formulaire profil (nom, email, avatar), changer mot de passe.
+  - **Interactions principales** : Mettre à jour, déconnexion.
+  - **Pré-requis** : Utilisateur connecté.
 
-### 17-televersement
+- Aide : DONE
 
-**Nom :** Téléversement de documents  
-**Objectif utilisateur :** Importer les documents à analyser.  
-**Contenus clés :** Zone de drag & drop, liste des fichiers uploadés, bouton analyser.  
-**Interactions principales :** Sélectionner fichiers, supprimer, lancer analyse.  
-**Prérequis :** Avoir créé un projet.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Accéder à l'aide et FAQ.
+  - **Contenus clés** : FAQ, guides d'utilisation, contact support.
+  - **Interactions principales** : Rechercher, contacter.
+  - **Pré-requis** : Aucun.
 
-### 18-selection-checklist
+- À propos : DONE
 
-**Nom :** Sélection de checklist  
-**Objectif utilisateur :** Choisir la checklist de conformité applicable.  
-**Contenus clés :** Liste des checklists disponibles, recherche, favoris.  
-**Interactions principales :** Sélectionner checklist, confirmer.  
-**Prérequis :** Avoir des documents uploadés.  
-**Statut :** DONE
+  - **Objectif utilisateur** : En savoir plus sur la plateforme.
+  - **Contenus clés** : Description projet, équipe, mentions légales.
+  - **Interactions principales** : Liens vers conditions, confidentialité.
+  - **Pré-requis** : Aucun.
 
-### 19-resultats-analyse
+- Confidentialité : DONE
 
-**Nom :** Résultats de l'analyse  
-**Objectif utilisateur :** Consulter le score et les détails de conformité.  
-**Contenus clés :** Score global, graphique, liste des critères validés/non, anomalies.  
-**Interactions principales :** Filtrer résultats, générer rapport, relancer analyse.  
-**Prérequis :** Avoir lancé une analyse.  
-**Statut :** DONE
+  - **Objectif utilisateur** : Consulter la politique de confidentialité.
+  - **Contenus clés** : Texte complet de la politique.
+  - **Interactions principales** : Retour à la page précédente.
+  - **Pré-requis** : Aucun.
 
-### 20-rapport
-
-**Nom :** Rapport de conformité  
-**Objectif utilisateur :** Télécharger ou visualiser le rapport détaillé.  
-**Contenus clés :** Vue du rapport PDF, options de téléchargement.  
-**Interactions principales :** Télécharger PDF, partager.  
-**Prérequis :** Avoir des résultats d'analyse.  
-**Statut :** DONE
-
-### 21-historique
-
-**Nom :** Historique des analyses  
-**Objectif utilisateur :** Consulter les analyses passées.  
-**Contenus clés :** Liste chronologique des analyses, filtres par date/projet.  
-**Interactions principales :** Ouvrir ancienne analyse, exporter données.  
-**Prérequis :** Être connecté, avoir des analyses.  
-**Statut :** DONE
+- Conditions : DONE
+  - **Objectif utilisateur** : Consulter les conditions d'utilisation.
+  - **Contenus clés** : Texte complet des CGU.
+  - **Interactions principales** : Retour à la page précédente.
+  - **Pré-requis** : Aucun.
 
 ## Notes
 
-- Les écrans sont interconnectés via des liens HTML relatifs.
-- Tous les écrans utilisent les layouts appropriés.
-- Navigation fluide entre pages.
+- Tous les écrans doivent respecter les layouts définis.
+- Navigation interconnectée via liens HTML cliquables.
+- Style monochrome noir/blanc/gris uniquement.
+- Responsive et accessible.</content>
+  <parameter name="filePath">d:\_\_\_GIACV1\controldoc\ecrans\01-sitemap.md
