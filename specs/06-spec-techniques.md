@@ -73,11 +73,11 @@ vite.config.ts
 
 ## 🔍 Pipeline d’analyse (Front uniquement)
 
-1. Extraction texte (PDF, DOCX, XLSX, IMG→OCR)  
-2. Normalisation des unités, nombres, dates  
-3. Vérification par règles déterministes (regex, bornes, options)  
-4. Appel LLM (facultatif, critère par critère)  
-5. Calcul du score global (pondérations)  
+1. Extraction texte (PDF, DOCX, XLSX, IMG→OCR)
+2. Normalisation des unités, nombres, dates
+3. Vérification par règles déterministes (regex, bornes, options)
+4. Appel LLM (facultatif, critère par critère)
+5. Calcul du score global (pondérations)
 6. Génération du rapport PDF téléchargeable
 
 ---
@@ -113,29 +113,29 @@ score = \frac{\sum w_i \times v_i}{\sum w_i} \times 100
 
 ---
 
-## ⚙️ Scripts (Vite + pnpm ou bun)
+## ⚙️ Scripts (Vite + bun)
 
 ```bash
 # Installation
-pnpm install
+bun install
 
 # Lancement en dev
-pnpm dev
+bun run dev
 
 # Build production
-pnpm build
+bun run build
 
 # Prévisualisation
-pnpm preview
+bun run preview
 ```
 
 ---
 
 ## 📦 Déploiement
 
-- Déploiement statique sur **GitHub Pages** (ou Netlify)  
-- Redirection SPA (`404.html → index.html`)  
-- Service Worker + manifest PWA  
+- Déploiement statique sur **GitHub Pages** (ou Netlify)
+- Redirection SPA (`404.html → index.html`)
+- Service Worker + manifest PWA
 
 ---
 
