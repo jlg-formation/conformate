@@ -1,11 +1,13 @@
-import PublicLayout from "./layouts/PublicLayout";
-import HomePage from "./pages/public/HomePage";
+import { BrowserRouter } from "react-router-dom";
+import PublicRoutes from "./routes/PublicRoutes";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
-    <PublicLayout>
-      <HomePage />
-    </PublicLayout>
+    <BrowserRouter>
+      <PublicRoutes />
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
 
