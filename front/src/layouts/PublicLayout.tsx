@@ -1,14 +1,13 @@
 import React from "react";
 import HeaderPublic from "../components/layout/HeaderPublic";
+import { Outlet } from "react-router-dom";
 
-const PublicLayout: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const PublicLayout: React.FC = () => {
   return (
     <div className="min-h-screen bg-white text-black">
       <HeaderPublic />
       <main className="p-4 min-h-screen flex flex-col items-center justify-center text-center">
-        {children}
+        <Outlet />
       </main>
       <footer className="bg-gray-100 p-4 text-center">
         <nav className="flex justify-center space-x-4 flex-wrap">

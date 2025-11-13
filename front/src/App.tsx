@@ -1,12 +1,7 @@
-import PublicLayout from "./layouts/PublicLayout";
-import HomePage from "./pages/public/HomePage";
+import AppRouter from "./AppRouter";
 
 function App() {
-  return (
-    <PublicLayout>
-      <HomePage />
-    </PublicLayout>
-  );
+  return <AppRouter />;
 }
 
 export default App;
