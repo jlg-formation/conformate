@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Démonstrateur RAG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+      <h1 class="text-3xl font-bold text-center mb-6 text-blue-600">
+        Démonstrateur RAG
+      </h1>
+
+      <!-- Section pour la clé OpenAI -->
+      <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+        <label
+          for="openaiKey"
+          class="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Votre clé OpenAI :
+        </label>
+        <input
+          type="password"
+          id="openaiKey"
+          class="w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+
+      <!-- Section pour uploader des fichiers -->
+      <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Alimentez le RAG avec des fichiers (txt/md) :
+        </label>
+        <input
+          type="file"
+          id="fileUpload"
+          accept=".txt,.md"
+          multiple
+          class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+        />
+        <button
+          id="processFiles"
+          class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+        >
+          Traiter les fichiers
+        </button>
+      </div>
+
+      <!-- Section pour poser une question -->
+      <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+        <label
+          for="userQuestion"
+          class="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Posez une question au RAG :
+        </label>
+        <input
+          type="text"
+          id="userQuestion"
+          class="w-full p-2 border border-gray-300 rounded-md mb-2"
+        />
+        <button
+          id="askQuestion"
+          class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+        >
+          Poser la question
+        </button>
+      </div>
+
+      <!-- Section pour afficher la réponse -->
+      <div id="responseArea" class="p-4 bg-gray-50 rounded-lg hidden">
+        <h2 class="text-xl font-semibold mb-2">Réponse :</h2>
+        <p id="ragResponse" class="whitespace-pre-wrap"></p>
+      </div>
+    </div>
+
+    <script>
+      // Variables globales
+      let ragData = [];
+      let openaiKey = "";
+
+      // Fonction pour découper un texte en phrases
+      function splitTextIntoSentences(text) {
+        // Remplace les sauts de ligne par des espaces et découpe en phrases
+        return text
+          .replace(/\n/g, " ")
+          .split(/[.!?]+/)
+          .map((s) => s.trim())
+          .filter((s) => s.length > 0);
+      }
+
+      // Fonction pour traiter les fichiers uploadés
+      document
+        .getElementById("processFiles")
+        .addEventListener("click", async () => {
+          const files = document.getElementById("fileUpload").files;
+          if (files.length === 0) {
+            alert("Veuillez sélectionner au moins un fichier.");
+            return;
+          }
+
+          ragData = [];
+          for (const file of files) {
+            const content = await file.text();
+            const sentences = splitTextIntoSentences(content);
+            ragData.push(...sentences);
+          }
+
+          alert(
+            `Fichiers traités ! ${ragData.length} phrases ajoutées au RAG.`
+          );
+        });
+
+      // Fonction pour poser une question au RAG
+      document
+        .getElementById("askQuestion")
+        .addEventListener("click", async () => {
+          openaiKey = document.getElementById("openaiKey").value;
+          if (!openaiKey) {
+            alert("Veuillez entrer votre clé OpenAI.");
+            return;
+          }
+
+          const question = document.getElementById("userQuestion").value;
+          if (!question) {
+            alert("Veuillez poser une question.");
+            return;
+          }
+
+          // Recherche des phrases pertinentes dans ragData
+          const relevantSentences = ragData.filter((sentence) =>
+            sentence.toLowerCase().includes(question.toLowerCase())
+          );
+
+          // Construction du prompt pour OpenAI
+          const prompt = `
+                Contexte : ${relevantSentences.join(" ")}
+                Question : ${question}
+                Réponds en français de manière concise et précise.
+            `;
+
+          // Appel à l'API OpenAI
+          try {
+            const response = await fetch(
+              "https://api.openai.com/v1/chat/completions",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${openaiKey}`,
+                },
+                body: JSON.stringify({
+                  model: "gpt-3.5-turbo",
+                  messages: [{ role: "user", content: prompt }],
+                  max_tokens: 200,
+                }),
+              }
+            );
+
+            const data = await response.json();
+            const answer = data.choices[0].message.content;
+
+            // Affichage de la réponse
+            document.getElementById("ragResponse").textContent = answer;
+            document.getElementById("responseArea").classList.remove("hidden");
+          } catch (error) {
+            alert("Erreur lors de l'appel à OpenAI : " + error.message);
+          }
+        });
+    </script>
+  </body>
+</html>

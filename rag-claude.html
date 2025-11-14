@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Démonstrateur RAG - Retrieval-Augmented Generation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Header -->
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <h1 class="text-3xl font-bold text-indigo-600 mb-2">
+          🤖 Démonstrateur RAG
+        </h1>
+        <p class="text-gray-600">
+          Retrieval-Augmented Generation - Système pédagogique simplifié
+        </p>
+      </div>
+
+      <!-- Explication RAG -->
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
+        <h3 class="font-bold text-blue-900 mb-2">📚 Qu'est-ce que le RAG ?</h3>
+        <p class="text-blue-800 text-sm">
+          Le RAG combine la recherche d'informations pertinentes dans vos
+          documents avec la génération de réponses par IA. Les étapes : 1)
+          Découper vos documents en chunks, 2) Vectoriser ces chunks, 3)
+          Rechercher les plus pertinents, 4) Générer une réponse contextuelle.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Section 1: Upload et Base de connaissances -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-xl font-bold text-gray-800 mb-4">
+            📁 Base de connaissances
+          </h2>
+
+          <!-- API Key -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Clé API OpenAI</label
+            >
+            <input
+              type="password"
+              id="apiKey"
+              placeholder="sk-..."
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+            <p class="text-xs text-gray-500 mt-1">
+              Votre clé n'est jamais stockée, uniquement en mémoire
+            </p>
+          </div>
+
+          <!-- Upload fichiers -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Ajouter des documents (.txt, .md)</label
+            >
+            <input
+              type="file"
+              id="fileInput"
+              accept=".txt,.md"
+              multiple
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+            />
+            <button
+              id="uploadBtn"
+              class="mt-2 w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition"
+            >
+              Charger et vectoriser
+            </button>
+          </div>
+
+          <!-- Documents chargés -->
+          <div class="mb-4">
+            <h3 class="text-sm font-medium text-gray-700 mb-2">
+              Documents indexés :
+            </h3>
+            <div
+              id="docList"
+              class="bg-gray-50 rounded p-3 min-h-20 text-sm text-gray-600"
+            >
+              Aucun document chargé
+            </div>
+          </div>
+
+          <!-- Statistiques -->
+          <div class="bg-indigo-50 rounded p-3">
+            <p class="text-sm text-indigo-800">
+              <strong>Chunks vectorisés :</strong>
+              <span id="chunkCount">0</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 2: Query et Résultats -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-xl font-bold text-gray-800 mb-4">
+            💬 Poser une question
+          </h2>
+
+          <div class="mb-4">
+            <textarea
+              id="queryInput"
+              rows="3"
+              placeholder="Posez votre question ici..."
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            ></textarea>
+            <button
+              id="queryBtn"
+              class="mt-2 w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition"
+            >
+              🔍 Rechercher et générer
+            </button>
+          </div>
+
+          <!-- Chunks pertinents trouvés -->
+          <div class="mb-4">
+            <h3 class="text-sm font-medium text-gray-700 mb-2">
+              📄 Contexte récupéré (top 3) :
+            </h3>
+            <div
+              id="retrievedChunks"
+              class="bg-yellow-50 rounded p-3 min-h-24 text-sm max-h-60 overflow-y-auto"
+            >
+              <p class="text-gray-400 italic">
+                Les chunks pertinents apparaîtront ici...
+              </p>
+            </div>
+          </div>
+
+          <!-- Réponse IA -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-700 mb-2">
+              🤖 Réponse générée :
+            </h3>
+            <div
+              id="aiResponse"
+              class="bg-green-50 rounded p-3 min-h-24 text-sm max-h-60 overflow-y-auto"
+            >
+              <p class="text-gray-400 italic">
+                La réponse de l'IA apparaîtra ici...
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section explication technique -->
+      <div class="bg-white rounded-lg shadow-lg p-6 mt-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">
+          🔧 Architecture technique
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+          <div class="bg-purple-50 p-3 rounded">
+            <h4 class="font-bold text-purple-900 mb-1">1. Chunking</h4>
+            <p class="text-purple-700">
+              Découpage du texte en segments de 200 caractères avec overlap de
+              50
+            </p>
+          </div>
+          <div class="bg-blue-50 p-3 rounded">
+            <h4 class="font-bold text-blue-900 mb-1">2. Embedding</h4>
+            <p class="text-blue-700">
+              Vectorisation via OpenAI text-embedding-3-small
+            </p>
+          </div>
+          <div class="bg-yellow-50 p-3 rounded">
+            <h4 class="font-bold text-yellow-900 mb-1">3. Similarity</h4>
+            <p class="text-yellow-700">
+              Calcul de similarité cosinus entre vecteurs
+            </p>
+          </div>
+          <div class="bg-green-50 p-3 rounded">
+            <h4 class="font-bold text-green-900 mb-1">4. Generation</h4>
+            <p class="text-green-700">
+              GPT-4 génère la réponse avec le contexte
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // === VARIABLES GLOBALES ===
+      let vectorStore = []; // {text, vector, source}
+      let apiKey = "";
+
+      // === ELEMENTS DOM ===
+      const apiKeyInput = document.getElementById("apiKey");
+      const fileInput = document.getElementById("fileInput");
+      const uploadBtn = document.getElementById("uploadBtn");
+      const queryBtn = document.getElementById("queryBtn");
+      const queryInput = document.getElementById("queryInput");
+      const docList = document.getElementById("docList");
+      const chunkCount = document.getElementById("chunkCount");
+      const retrievedChunks = document.getElementById("retrievedChunks");
+      const aiResponse = document.getElementById("aiResponse");
+
+      // === CHUNKING ALGORITHM ===
+      function chunkText(text, chunkSize = 200, overlap = 50) {
+        const chunks = [];
+        let start = 0;
+
+        while (start < text.length) {
+          let end = start + chunkSize;
+
+          // Si on n'est pas à la fin, essayer de couper à un espace
+          if (end < text.length) {
+            const spaceIndex = text.lastIndexOf(" ", end);
+            if (spaceIndex > start) {
+              end = spaceIndex;
+            }
+          }
+
+          const chunk = text.slice(start, end).trim();
+          if (chunk.length > 0) {
+            chunks.push(chunk);
+          }
+
+          start = end - overlap;
+        }
+
+        return chunks;
+      }
+
+      // === VECTORISATION (EMBEDDING) ===
+      async function getEmbedding(text) {
+        if (!apiKey) {
+          throw new Error("Clé API manquante");
+        }
+
+        const response = await fetch("https://api.openai.com/v1/embeddings", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "text-embedding-3-small",
+            input: text,
+          }),
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error?.message || "Erreur API");
+        }
+
+        const data = await response.json();
+        return data.data[0].embedding;
+      }
+
+      // === SIMILARITE COSINUS ===
+      function cosineSimilarity(vecA, vecB) {
+        let dotProduct = 0;
+        let normA = 0;
+        let normB = 0;
+
+        for (let i = 0; i < vecA.length; i++) {
+          dotProduct += vecA[i] * vecB[i];
+          normA += vecA[i] * vecA[i];
+          normB += vecB[i] * vecB[i];
+        }
+
+        return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+      }
+
+      // === RECHERCHE DES CHUNKS PERTINENTS ===
+      async function retrieveRelevantChunks(query, topK = 3) {
+        const queryVector = await getEmbedding(query);
+
+        const scores = vectorStore.map((item) => ({
+          ...item,
+          similarity: cosineSimilarity(queryVector, item.vector),
+        }));
+
+        scores.sort((a, b) => b.similarity - a.similarity);
+
+        return scores.slice(0, topK);
+      }
+
+      // === GENERATION AVEC GPT ===
+      async function generateResponse(query, context) {
+        const response = await fetch(
+          "https://api.openai.com/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+              model: "gpt-4o-mini",
+              messages: [
+                {
+                  role: "system",
+                  content:
+                    "Tu es un assistant qui répond uniquement en te basant sur le contexte fourni. Si l'information n'est pas dans le contexte, dis-le clairement.",
+                },
+                {
+                  role: "user",
+                  content: `Contexte:\n${context}\n\nQuestion: ${query}`,
+                },
+              ],
+              temperature: 0.7,
+              max_tokens: 500,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error?.message || "Erreur API");
+        }
+
+        const data = await response.json();
+        return data.choices[0].message.content;
+      }
+
+      // === EVENT: UPLOAD DOCUMENTS ===
+      uploadBtn.addEventListener("click", async () => {
+        apiKey = apiKeyInput.value.trim();
+
+        if (!apiKey) {
+          alert("⚠️ Veuillez entrer votre clé API OpenAI");
+          return;
+        }
+
+        const files = fileInput.files;
+        if (files.length === 0) {
+          alert("⚠️ Veuillez sélectionner au moins un fichier");
+          return;
+        }
+
+        uploadBtn.disabled = true;
+        uploadBtn.textContent = "⏳ Traitement en cours...";
+
+        try {
+          for (const file of files) {
+            const text = await file.text();
+            const chunks = chunkText(text);
+
+            for (const chunk of chunks) {
+              const vector = await getEmbedding(chunk);
+              vectorStore.push({
+                text: chunk,
+                vector: vector,
+                source: file.name,
+              });
+            }
+          }
+
+          // Mise à jour UI
+          const docNames = [...new Set(vectorStore.map((v) => v.source))];
+          docList.innerHTML = docNames
+            .map(
+              (name) =>
+                `<div class="flex items-center mb-1"><span class="text-green-600 mr-2">✓</span>${name}</div>`
+            )
+            .join("");
+
+          chunkCount.textContent = vectorStore.length;
+
+          alert(
+            `✅ ${files.length} document(s) chargé(s) et vectorisé(s) avec succès!`
+          );
+        } catch (error) {
+          alert(`❌ Erreur: ${error.message}`);
+        } finally {
+          uploadBtn.disabled = false;
+          uploadBtn.textContent = "Charger et vectoriser";
+        }
+      });
+
+      // === EVENT: QUERY ===
+      queryBtn.addEventListener("click", async () => {
+        const query = queryInput.value.trim();
+
+        if (!query) {
+          alert("⚠️ Veuillez entrer une question");
+          return;
+        }
+
+        if (vectorStore.length === 0) {
+          alert("⚠️ Veuillez d'abord charger des documents");
+          return;
+        }
+
+        if (!apiKey) {
+          alert("⚠️ Veuillez entrer votre clé API OpenAI");
+          return;
+        }
+
+        queryBtn.disabled = true;
+        queryBtn.textContent = "⏳ Recherche en cours...";
+        retrievedChunks.innerHTML =
+          '<p class="text-gray-400 italic">Recherche...</p>';
+        aiResponse.innerHTML =
+          '<p class="text-gray-400 italic">Génération...</p>';
+
+        try {
+          // 1. Retrieval
+          const relevantChunks = await retrieveRelevantChunks(query);
+
+          // Affichage des chunks récupérés
+          retrievedChunks.innerHTML = relevantChunks
+            .map(
+              (chunk, i) => `
+                    <div class="mb-3 p-2 bg-white rounded border-l-4 border-yellow-500">
+                        <div class="text-xs text-gray-500 mb-1">
+                            <strong>Source:</strong> ${chunk.source} | 
+                            <strong>Similarité:</strong> ${(
+                              chunk.similarity * 100
+                            ).toFixed(1)}%
+                        </div>
+                        <div class="text-gray-700">${chunk.text}</div>
+                    </div>
+                `
+            )
+            .join("");
+
+          // 2. Generation
+          const context = relevantChunks.map((c) => c.text).join("\n\n");
+          const response = await generateResponse(query, context);
+
+          aiResponse.innerHTML = `<div class="text-gray-800 whitespace-pre-wrap">${response}</div>`;
+        } catch (error) {
+          aiResponse.innerHTML = `<div class="text-red-600">❌ Erreur: ${error.message}</div>`;
+        } finally {
+          queryBtn.disabled = false;
+          queryBtn.textContent = "🔍 Rechercher et générer";
+        }
+      });
+
+      // === ENTER KEY SUPPORT ===
+      queryInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          queryBtn.click();
+        }
+      });
+    </script>
+  </body>
+</html>

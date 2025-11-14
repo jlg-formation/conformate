@@ -1,0 +1,10 @@
+# Résumé exécutif
+
+La plateforme ControlDoc est une application web front-end conçue pour évaluer automatiquement la conformité de documents (principalement des devis de rénovation énergétique) par rapport à des checklists réglementaires (telles que les fiches CEE - Certificats d'Économies d'Énergie). L'objectif principal est d'objectiver et d'accélérer les processus de contrôle qualité dans des domaines comme l'architecture, la formation ou l'audit RGPD, en calculant un score de conformité de 0 à 100 et en générant des rapports détaillés.
+
+Les fonctionnalités clés incluent le téléversement de documents, la sélection ou l'importation de checklists, l'analyse automatique avec extraction de texte (PDF, DOCX, etc.), le calcul de scores pondérés, la visualisation graphique des résultats et la génération de rapports PDF. L'application est responsive, mobile-first, et utilise un stockage local (IndexedDB via localForage) sans backend, avec une option pour intégrer un LLM (OpenAI) côté client.
+
+Par rapport aux spécifications fonctionnelles détaillées dans `specs/05-spec-fonctionnelles.md` et aux user stories dans `specs/04-user-stories.md`, l'application présente une structure de pages complète (20 écrans wireframe générés dans `ecrans/` et 23 pages React dans `front/src/pages/`), mais la logique métier centrale (extraction, analyse, scoring) n'est pas implémentée : les fichiers dans `front/src/lib/` sont vides. La complétude est donc partielle, avec une dette technique importante sur les fonctionnalités core.
+
+Les enjeux principaux sont l'implémentation des algorithmes d'analyse documentaire, la sécurisation des données locales, et l'ajout potentiel d'un backend pour la scalabilité et la collaboration multi-utilisateurs. L'application repose sur des technologies modernes (React 19, TypeScript, Vite, Tailwind CSS 4), mais manque de tests, de documentation technique, et de gestion d'erreurs robuste.</content>
+<parameter name="filePath">d:\_\_\_GIACV1\controldoc\retro-ingenierie\02-contexte-et-perimetre.md

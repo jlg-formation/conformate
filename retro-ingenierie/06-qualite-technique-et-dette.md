@@ -1,0 +1,30 @@
+# Écarts spécifications vs code
+
+Le tableau ci-dessous compare les fonctionnalités spécifiées dans `specs/05-spec-fonctionnelles.md` et `specs/04-user-stories.md` avec leur état d'implémentation dans le code. L'état est déterminé par l'existence des pages React et la présence de logique dans les fichiers lib/.
+
+| Fonctionnalité                                | État           | Commentaires                                                                | Fichiers concernés                                                                   |
+| --------------------------------------------- | -------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ---------- |
+| Connexion et tableau de bord                  | Implémenté     | Pages existantes, mais authentification non fonctionnelle (pas de backend). | `front/src/pages/public/LoginPage.tsx`, `front/src/pages/app/DashboardPage.tsx`      |
+| Téléversement de documents                    | Partiel        | Composant UI présent, mais extraction non implémentée.                      | `front/src/components/ui/FileUploadZone.tsx`, `front/src/lib/extractors.ts` (vide)   |
+| Reconnaissance automatique du type de travaux | Non implémenté | Logique d'extraction et détection absente.                                  | `front/src/lib/extractors.ts`, `front/src/workers/pdf.worker.ts`                     |
+| Sélection de checklist                        | Implémenté     | Page présente, mais gestion des checklists non fonctionnelle.               | `front/src/pages/app/SelectChecklistPage.tsx`, `front/src/features/checklists/`      |
+| Lancement de l'analyse                        | Partiel        | Page présente, mais pipeline d'analyse vide.                                | `front/src/pages/app/LaunchAnalysisPage.tsx`, `front/src/lib/scoring.ts`             |
+| Calcul du score de conformité                 | Non implémenté | Algorithme de scoring absent.                                               | `front/src/lib/scoring.ts`, `front/src/lib/rules.ts`                                 |
+| Affichage des résultats (score, critères)     | Partiel        | UI présente, mais données fictives.                                         | `front/src/pages/app/AnalysisResultsPage.tsx`, `front/src/components/ui/Stepper.tsx` |
+| Filtres sur les résultats                     | Non implémenté | Logique de filtrage absente.                                                | `front/src/pages/app/AnalysisResultsPage.tsx`                                        |
+| Génération de rapport PDF                     | Non implémenté | Bibliothèque jsPDF mentionnée dans specs, mais non intégrée.                | `front/src/pages/app/GenerateReportPage.tsx`, `front/src/features/reports/`          |
+| Historique des analyses                       | Partiel        | Page présente, mais stockage local non implémenté.                          | `front/src/pages/app/AnalysesHistoryPage.tsx`, `front/src/lib/storage.ts`            |
+| Statistiques globales et classements          | Partiel        | Page présente, mais calculs absents.                                        | `front/src/pages/app/GlobalStatsPage.tsx`                                            |
+| Gestion utilisateurs (admin)                  | Implémenté     | Pages présentes, mais CRUD non fonctionnel sans backend.                    | `front/src/pages/app/UserManagementPage.tsx`                                         |
+| Gestion checklists (admin)                    | Partiel        | Page présente, mais édition non implémentée.                                | `front/src/pages/app/ChecklistManagementPage.tsx`                                    |
+| Paramètres et seuils                          | Partiel        | Page présente, mais stockage des préférences non complet.                   | `front/src/pages/app/SettingsPage.tsx`                                               |
+| Alertes et notifications                      | Non implémenté | Aucune logique d'alertes.                                                   | -                                                                                    |
+| OCR pour images                               | Non implémenté | Worker OCR présent mais vide.                                               | `front/src/workers/ocr.worker.ts`                                                    |
+| Normalisation des données                     | Non implémenté | Fonctions de normalisation absentes.                                        | `front/src/lib/normalize.ts`                                                         |
+| Intégration LLM OpenAI                        | Non implémenté | Fichier llm.ts vide.                                                        | `front/src/lib/llm.ts`                                                               |
+| Stockage local (IndexedDB)                    | Partiel        | Bibliothèque localForage mentionnée, mais usage non implémenté.             | `front/src/lib/storage.ts`                                                           |
+| PWA et mode offline                           | Non implémenté | Manifest et service worker absents.                                         | -                                                                                    |
+| Tests unitaires et E2E                        | Non implémenté | Aucune configuration de tests visible.                                      | -                                                                                    |
+| Accessibilité et responsive                   | Inconnu        | UI avec Tailwind, mais audit non effectué.                                  | `front/src/components/ui/`                                                           | </content> |
+
+<parameter name="filePath">d:\_\_\_GIACV1\controldoc\retro-ingenierie\05-ecarts-spec-vs-code.md
